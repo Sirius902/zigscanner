@@ -24,6 +24,7 @@ pub fn parse(comptime pattern: []const u8) Self {
         if (i >= pattern.len) break;
         if (pattern[i] != ' ') @compileError("Expected \" \" after pattern byte");
         i += 1;
+        if (i >= pattern.len) @compileError("Unexpected end of input");
     }
 
     return .{ .pattern = pattern_bytes };
