@@ -1,3 +1,3 @@
-pub const Signature = @import("Signature.zig");
+pub const fmt = @import("fmt.zig");
 
-pub usingnamespace @import("fmt.zig");
+pub const Signature = @import("Signature.zig");
