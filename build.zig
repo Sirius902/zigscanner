@@ -4,7 +4,7 @@ pub fn build(b: *std.Build) void {
     const target = b.standardTargetOptions(.{});
     const optimize = b.standardOptimizeOption(.{});
 
-    _ = b.addModule("zigscanner", .{
+    const zigscanner = b.addModule("zigscanner", .{
         .root_source_file = .{ .path = "src/zigscanner.zig" },
     });
 
@@ -16,6 +16,7 @@ pub fn build(b: *std.Build) void {
         .optimize = optimize,
     });
 
+    exe.root_module.addImport("zigscanner", zigscanner);
     b.installArtifact(exe);
 
     const run_cmd = b.addRunArtifact(exe);
