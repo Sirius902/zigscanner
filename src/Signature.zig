@@ -104,10 +104,8 @@ pub fn isMatch(self: Self, bytes: []const u8) bool {
 fn simdScan(self: Self, data: []const u8) ?usize {
     const chunk_len = suggested_vec_len orelse unreachable;
 
-    const true_vec: @Vector(chunk_len, bool) = @splat(true);
     var pattern_vec: @Vector(chunk_len, u8) = @splat(0);
     var any_select: @Vector(chunk_len, bool) = @splat(true);
-
     for (self.pattern, 0..) |pb, i| {
         switch (pb) {
             .Byte => |b| {
@@ -137,6 +135,8 @@ fn simdScan(self: Self, data: []const u8) ?usize {
     }
 
     const anchor_vec: @Vector(chunk_len, u8) = @splat(anchor_byte);
+
+    const true_vec: @Vector(chunk_len, bool) = @splat(true);
     const false_vec: @Vector(chunk_len, bool) = @splat(false);
 
     var chunk: @Vector(chunk_len, u8) = undefined;
@@ -158,8 +158,6 @@ fn simdScan(self: Self, data: []const u8) ?usize {
         }
 
         const valid_anchors = @select(bool, anchor_in_bounds, anchors, false_vec);
-
-        // TODO: Make sure candidate's start isn't before the start of data.
         if (std.simd.firstTrue(valid_anchors)) |anchor_idx| {
             i += anchor_idx - anchor_off;
             continue;
