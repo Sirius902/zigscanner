@@ -1,7 +1,7 @@
 .{
     .name = "zigscanner",
     .version = "0.1.0",
-    .minimum_zig_version = "0.11.0",
+    .minimum_zig_version = "0.12.0",
     .dependencies = .{},
     .paths = .{
         ".gitattributes",
@@ -9,6 +9,7 @@
         "build.zig",
         "build.zig.zon",
         "src",
+        // TODO: Add LICENSE and README.md.
         "LICENSE",
         "README.md",
     },
